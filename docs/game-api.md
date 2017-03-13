@@ -133,6 +133,8 @@ Server current time
 | `3` | Forbidden |
 | `4` | Game closed |
 | `5` | Room full |
+| `9` | Room is not opened |
+| `10`| Invalid input |
 | `20` | Server closed |
 | `800` | Other reason, please refer to *info* |
 | `888` | Unknown error |
@@ -145,11 +147,78 @@ Text explanation about the login status
 
 Key to identify the room and granted permission in game playing API.
 
+**game**
+
+Type of game in this room. Only `connect_four` is supported.
+
 **time**
 
 Server current time
 
 ### **POST** `v1/player/create_game`
+
+#### Request parameters
+
+|Variables      | Type   | Description                        |
+|---------------|--------|------------------------------------|
+|session        | char   |Login session ID of current session |
+|game           | char   |(Optional) Game type, only connect_four is supported. Default value is `connect_four` |
+|game_start     | int    |(Optional) `0` for start yourself, `1` for start by opponent. Default value is `0`|
+|start_time     | char   |(Optional) Date and time for room start. Empty value represent the room open now. Date time must follow the format **YYYY-MM-DDThh:mm:ssTZD* e.g. `2016-11-23T03:45:00+08:00` |
+|private        | int    |(Optional) `0` for public room and `1` for private room. Default value is `0` |
+|invite         | char   |(Optional) User ID of opponent you want to play with  |
+
+#### Request response
+> {"status":1,"info":"Create success","permission":"c2Vzc2lvbiBrZXkgaGVyZSBqaGtsamdsa2RmbGtqIHRyamxrZXllcg==","game":"connect_four","private":0,"invited":"user01","start_time":"2017-11-23 05:30:00","time":"2017-03-15 00:00:00"}
+
+**status**
+
+| Status code | Description |
+|:---:|:--- |
+| `1` | Success |
+| `2` | Invalid session ID |
+| `3` | Forbidden |
+| `4` | Invalid start_time |
+| `5` | Invalid game | 
+| `6` | Invalid invited user |
+| `7` | Open too many rooms | 
+| `8` | Start time longer than 48 hours |
+| `9` | Room is not opened |
+| `10`| Invalid input |
+| `20` | Server closed |
+| `800` | Other reason, please refer to *info* |
+| `888` | Unknown error |
+
+**info**
+
+Text explanation about the login status
+
+**permission**
+
+Key to identify the room and granted permission in game playing API.
+
+**game**
+
+Type of game in this room. Only `connect_four` is supported.
+
+**private**
+
+| Status code | Description |
+|:---:|:--- |
+|`0`  |Public room, which will show in room list |
+|`1`  |Private room, only invited user or user with direct link can be access. It will not shown in room list|
+
+**invited**
+
+(Optional) The user name of invited opponent. It will not be shown if no user is invited.
+
+**start_time**
+
+The room opening time.  Current time will be shown if `game_start` variable is not set.
+
+**time**
+
+Server current time
 
 ## Playing game
 
@@ -158,3 +227,4 @@ Server current time
 ### **GET** `v1/player/game_status`
 
 ### **POST** `v1/player/move`
+
