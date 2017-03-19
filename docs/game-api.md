@@ -210,7 +210,7 @@ Type of game in this room. Only `connect_four` is supported.
 
 **invited**
 
-(Optional) The user name of invited opponent. It will not be shown if no user is invited.
+The user name of invited opponent. It will not be shown if no user is invited.
 
 **start_time**
 
@@ -224,7 +224,171 @@ Server current time
 
 ### **GET** `v1/player/opponent_info`
 
+#### Request parameters
+
+|Variables      | Type   | Description                        |
+|---------------|--------|------------------------------------|
+|session        | char   |Login session ID of current session |
+|roomid         | char   |(Optional) Unique room ID           |
+|user           | char   |(Optional) Username of opponent     |
+
+\# Either `roomid` or `user` is needed for for the request.
+
+#### Request response
+> {"status":1,"info":"Success","user":{"name":"User 1","user":"user1","game_played":20,"member_since":"2015-01-02"},"time":"2017-03-15 00:00:00"}
+
+**status**
+
+| Status code | Description |
+|:---:|:--- |
+| `1` | Success |
+| `2` | Invalid session ID |
+| `3` | Forbidden |
+| `5` | Invalid room ID | 
+| `6` | Invalid user |
+| `10`| Invalid input |
+| `20` | Server closed |
+| `800` | Other reason, please refer to *info* |
+| `888` | Unknown error |
+
+**info**
+
+Text explanation about the login status
+
+**user**
+
+User information include user nickname, user ID, game played and registration date. There will be game result in later stage.
+
+**time**
+
+Server current time
+
 ### **GET** `v1/player/game_status`
+
+**This is long polling request. Please refer to remarks for the connection advice.**
+
+#### Request parameters
+
+|Variables      | Type   | Description                        |
+|---------------|--------|------------------------------------|
+|session        | char   |Login session ID of current session |
+|roomid         | char   | Unique room ID                     |
+|permission     | char   | Permission key for access game room|
+
+#### Request response
+> {"status":1,"info":"Success","gameboard":[-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,0,1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1],"new_step":[2,3],"your_turn":1,"end_game":0,"winner":"","time":"2017-03-15 00:00:00"}
+
+**status**
+
+| Status code | Description |
+|:---:|:--- |
+| `1` | Success |
+| `2` | Invalid session ID |
+| `3` | Forbidden |
+| `5` | Invalid room ID | 
+| `6` | Too many request |
+| `10`| Invalid input |
+| `20` | Server closed |
+| `800` | Other reason, please refer to *info* |
+| `888` | Unknown error |
+
+**info**
+
+Text explanation about the login status
+
+**gameboard**
+
+The chess position on the gameboard. `-1` for empty place, `0` for you and `1` for opponent.
+
+**new_step**
+
+The position of last step. The variable will be empty / does not return if the gameboard is empty.
+
+**your_turn**
+
+| Status code | Description |
+|:---:|:--- |
+| `1` | It is your turn and you can go to next step |
+| `0` | You have to wait for opponent's response    |
+
+**end_game**
+
+| Status code | Description |
+|:---:|:--- |
+| `1` | The game is finished |
+| `2` | The opponent withdraw the game |
+| `0` | The game is still on-going |
+
+**winner**
+
+If will return either `Tie` or winner user name. Empty string will be return if the game is still on-going.
+
+**time**
+
+Server current time
 
 ### **POST** `v1/player/move`
 
+#### Request parameters
+
+|Variables      | Type   | Description                        |
+|---------------|--------|------------------------------------|
+|session        | char   |Login session ID of current session |
+|roomid         | char   | Unique room ID                     |
+|permission     | char   | Permission key for access game room|
+|column         | int    | Column ID for your next step, first column is 1|
+|row            | int    | Row ID for your next step, first column is 1|
+
+#### Request response
+> {"status":1,"info":"Success","gameboard":[-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,0,1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1],"new_step":[2,3],"your_turn":1,"end_game":0,"winner":"","time":"2017-03-15 00:00:00"}
+
+**status**
+
+| Status code | Description |
+|:---:|:--- |
+| `1` | Success |
+| `2` | Invalid session ID |
+| `3` | Forbidden |
+| `5` | Invalid room ID | 
+| `6` | Too many request |
+| `10`| Invalid input |
+| `20` | Server closed |
+| `40` | Position occupied | 
+| `41` | 
+| `800` | Other reason, please refer to *info* |
+| `888` | Unknown error |
+
+**info**
+
+Text explanation about the login status
+
+**gameboard**
+
+The chess position on the gameboard. `-1` for empty place, `0` for you and `1` for opponent.
+
+**new_step**
+
+The position of last step. The variable will be empty / does not return if the gameboard is empty.
+
+**your_turn**
+
+| Status code | Description |
+|:---:|:--- |
+| `1` | It is your turn and you can go to next step |
+| `0` | You have to wait for opponent's response    |
+
+**end_game**
+
+| Status code | Description |
+|:---:|:--- |
+| `1` | The game is finished |
+| `2` | The opponent withdraw the game |
+| `0` | The game is still on-going |
+
+**winner**
+
+If will return either `Tie` or winner user name. Empty string will be return if the game is still on-going.
+
+**time**
+
+Server current time
