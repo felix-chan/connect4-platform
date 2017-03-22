@@ -12,18 +12,18 @@
 
 #### Request response
 
-> {"status":1,"info":"Login Success","session":"c2Vzc2lvbiBrZXkgaGVyZQ==","expire":"2017-03-20 23:59:59","time":"2017-03-15 00:00:00"}
+> `{"status":"success","info":"Login Success","session":"c2Vzc2lvbiBrZXkgaGVyZQ==","expire":"2017-03-20 23:59:59","time":"2017-03-15 00:00:00"}
 
 **status**
 
 | Status code | Description |
 |:---:|:--- |
-| `1` | Login success |
-| `2` | Wrong username or password |
-| `3` | Forbidden |
-| `4` |  Already login into other device |
-| `800` | Other reason, please refer to *info* |
-| `888` | Unknown error |
+| `success` | Login success |
+| `login_fail` | Wrong username or password |
+| `forbidden` | Forbidden |
+| `already_login` |  Already login into other device |
+| `other_reason` | Other reason, please refer to *info* |
+| `unknown_error` | Unknown error |
 
 **info**
 
@@ -50,17 +50,17 @@ Login expire time for this session. The session will be expired after the return
 |session        | char   |Login session ID of current session |
 
 #### Request response
-> {"status":1,"info":"Logout Success","time":"2017-03-15 00:00:00"}
+> `{"status":"success","info":"Logout Success","time":"2017-03-15 00:00:00"}
 
 **status**
 
 | Status code | Description |
 |:---:|:--- |
-|`1` | Logout success |
-| `2` | Invalid session ID |
-| `3` | Forbidden |
-| `800` | Other reason, please refer to *info* |
-| `888` | Unknown error |
+| `success` | Logout success |
+| `invalid_session` | Invalid session ID |
+| `forbidden` | Forbidden |
+| `other_reason` | Other reason, please refer to *info* |
+| `unknown_error` | Unknown error |
 
 **info**
 
@@ -82,19 +82,19 @@ Server current time
 
 #### Request response
 
-> {"status":1,"room":[{"roomid":"1001","game":"connect_four","holder":"user1"},{"roomid":"1002","game":"connect_four","holder":"user2"}],"time":"2017-03-15 00:00:00","info":"Success"}
+> `{"status":"success","room":[{"roomid":"1001","game":"connect_four","holder":"user1"},{"roomid":"1002","game":"connect_four","holder":"user2"}],"time":"2017-03-15 00:00:00","info":"Success"}
 
 **status**
 
 | Status code | Description |
 |:---:|:--- |
-| `1` | Success |
-| `2` | Invalid session ID |
-| `3` | Forbidden |
-| `4` | Empty room |
-| `20` | Server closed |
-| `800` | Other reason, please refer to *info* |
-| `888` | Unknown error |
+| `success` | Logout success |
+| `invalid_session` | Invalid session ID |
+| `forbidden` | Forbidden |
+| `empty_room` | Empty room |
+| `server_close` | Server closed |
+| `other_reason` | Other reason, please refer to *info* |
+| `unknown_error` | Unknown error |
 
 **room**
 
@@ -122,22 +122,22 @@ Server current time
 |roomid         | char   | Unique room ID                     |
 
 #### Request response
-> {"status":1,"info":"Join success","permission":"c2Vzc2lvbiBrZXkgaGVyZSBqaGtsamdsa2RmbGtqIHRyamxrZXllcg==","game":"connect_four","opponent":"user1","time":"2017-03-15 00:00:00"}
+> `{"status":"success","info":"Join success","permission":"c2Vzc2lvbiBrZXkgaGVyZSBqaGtsamdsa2RmbGtqIHRyamxrZXllcg==","game":"connect_four","opponent":"user1","time":"2017-03-15 00:00:00"}
 
 **status**
 
 | Status code | Description |
 |:---:|:--- |
-| `1` | Success |
-| `2` | Invalid session ID |
-| `3` | Forbidden |
-| `4` | Game closed |
-| `5` | Room full |
-| `9` | Room is not opened |
-| `10`| Invalid input |
-| `20` | Server closed |
-| `800` | Other reason, please refer to *info* |
-| `888` | Unknown error |
+| `success` | Logout success |
+| `invalid_session` | Invalid session ID |
+| `forbidden` | Forbidden |
+| `game_close` | Game closed |
+| `room_full` | Room full |
+| `room_not_open` | Room is not opened |
+| `invalid_input`| Invalid input |
+| `server_close` | Server closed |
+| `other_reason` | Other reason, please refer to *info* |
+| `unknown_error` | Unknown error |
 
 **info**
 
@@ -169,25 +169,25 @@ Server current time
 |invite         | char   |(Optional) User ID of opponent you want to play with  |
 
 #### Request response
-> {"status":1,"info":"Create success","permission":"c2Vzc2lvbiBrZXkgaGVyZSBqaGtsamdsa2RmbGtqIHRyamxrZXllcg==","game":"connect_four","private":0,"invited":"user01","start_time":"2017-11-23 05:30:00","time":"2017-03-15 00:00:00"}
+> `{"status":"success","info":"Create success","permission":"c2Vzc2lvbiBrZXkgaGVyZSBqaGtsamdsa2RmbGtqIHRyamxrZXllcg==","game":"connect_four","private":0,"invited":"user01","start_time":"2017-11-23 05:30:00","time":"2017-03-15 00:00:00"}
 
 **status**
 
 | Status code | Description |
 |:---:|:--- |
-| `1` | Success |
-| `2` | Invalid session ID |
-| `3` | Forbidden |
-| `4` | Invalid start_time |
-| `5` | Invalid game | 
-| `6` | Invalid invited user |
-| `7` | Open too many rooms | 
-| `8` | Start time longer than 48 hours |
-| `9` | Room is not opened |
-| `10`| Invalid input |
-| `20` | Server closed |
-| `800` | Other reason, please refer to *info* |
-| `888` | Unknown error |
+| `success` | Logout success |
+| `invalid_session` | Invalid session ID |
+| `forbidden` | Forbidden |
+| `invalid_start` | Invalid start_time |
+| `invalid_game` | Invalid game | 
+| `invalid_user` | Invalid invited user |
+| `too_many_rooms` | Open too many rooms | 
+| `too_late_start` | Start time longer than 48 hours |
+| `room_not_open` | Room is not opened |
+| `invalid_input`| Invalid input |
+| `server_close` | Server closed |
+| `other_reason` | Other reason, please refer to *info* |
+| `unknown_error` | Unknown error |
 
 **info**
 
@@ -235,21 +235,21 @@ Server current time
 \# Either `roomid` or `user` is needed for for the request.
 
 #### Request response
-> {"status":1,"info":"Success","user":{"name":"User 1","user":"user1","game_played":20,"member_since":"2015-01-02"},"time":"2017-03-15 00:00:00"}
+> `{"status":"success","info":"Success","user":{"name":"User 1","user":"user1","game_played":20,"member_since":"2015-01-02"},"time":"2017-03-15 00:00:00"}
 
 **status**
 
 | Status code | Description |
 |:---:|:--- |
-| `1` | Success |
-| `2` | Invalid session ID |
-| `3` | Forbidden |
-| `5` | Invalid room ID | 
-| `6` | Invalid user |
-| `10`| Invalid input |
-| `20` | Server closed |
-| `800` | Other reason, please refer to *info* |
-| `888` | Unknown error |
+| `success` | Logout success |
+| `invalid_session` | Invalid session ID |
+| `forbidden` | Forbidden |
+| `invalid_roomid` | Invalid room ID | 
+| `invalid_user` | Invalid user |
+| `invalid_input`| Invalid input |
+| `server_close` | Server closed |
+| `other_reason` | Other reason, please refer to *info* |
+| `unknown_error` | Unknown error |
 
 **info**
 
@@ -276,21 +276,21 @@ Server current time
 |permission     | char   | Permission key for access game room|
 
 #### Request response
-> {"status":1,"info":"Success","gameboard":[-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,0,1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1],"new_step":[2,3],"your_turn":1,"end_game":0,"winner":"","time":"2017-03-15 00:00:00"}
+> `{"status":"success","info":"Success","gameboard":[[-1,-1,0,-1,-1,-1,-1],[-1,-1,1,-1,-1,-1,-1],[-1,-1,-1,-1,-1,-1,-1],[-1,-1,-1,-1,-1,-1,-1],[-1,-1,-1,-1,-1,-1,-1],[-1,-1,-1,-1,-1,-1,-1]],"new_step":[2,3],"your_turn":1,"end_game":0,"winner":"","time":"2017-03-15 00:00:00"}
 
 **status**
 
 | Status code | Description |
 |:---:|:--- |
-| `1` | Success |
-| `2` | Invalid session ID |
-| `3` | Forbidden |
-| `5` | Invalid room ID | 
-| `6` | Too many request |
-| `10`| Invalid input |
-| `20` | Server closed |
-| `800` | Other reason, please refer to *info* |
-| `888` | Unknown error |
+| `success` | Logout success |
+| `invalid_session` | Invalid session ID |
+| `forbidden` | Forbidden |
+| `invalid_roomid` | Invalid room ID | 
+| `too_many_request` | Too many request |
+| `invalid_input`| Invalid input |
+| `server_close` | Server closed |
+| `other_reason` | Other reason, please refer to *info* |
+| `unknown_error` | Unknown error |
 
 **info**
 
@@ -340,23 +340,22 @@ Server current time
 |row            | int    | Row ID for your next step, first column is 1|
 
 #### Request response
-> {"status":1,"info":"Success","gameboard":[-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,0,1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1],"new_step":[2,3],"your_turn":1,"end_game":0,"winner":"","time":"2017-03-15 00:00:00"}
+> `{"status":"success","info":"Success","gameboard":[[-1,-1,0,-1,-1,-1,-1],[-1,-1,1,-1,-1,-1,-1],[-1,-1,-1,-1,-1,-1,-1],[-1,-1,-1,-1,-1,-1,-1],[-1,-1,-1,-1,-1,-1,-1],[-1,-1,-1,-1,-1,-1,-1]],"new_step":[2,3],"your_turn":1,"end_game":0,"winner":"","time":"2017-03-15 00:00:00"}
 
 **status**
 
 | Status code | Description |
 |:---:|:--- |
-| `1` | Success |
-| `2` | Invalid session ID |
-| `3` | Forbidden |
-| `5` | Invalid room ID | 
-| `6` | Too many request |
-| `10`| Invalid input |
-| `20` | Server closed |
-| `40` | Position occupied | 
-| `41` | 
-| `800` | Other reason, please refer to *info* |
-| `888` | Unknown error |
+| `success` | Logout success |
+| `invalid_session` | Invalid session ID |
+| `forbidden` | Forbidden |
+| `invalid_roomid` | Invalid room ID | 
+| `too_many_request` | Too many request |
+| `invalid_input`| Invalid input |
+| `server_close` | Server closed |
+| `occupied` | Position occupied | 
+| `other_reason` | Other reason, please refer to *info* |
+| `unknown_error` | Unknown error |
 
 **info**
 
