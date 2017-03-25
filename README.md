@@ -6,4 +6,4 @@ API for playing chess is provided [here].
 
 [Connect Four game]: https://en.wikipedia.org/wiki/Connect_Four
 [Tronado]: http://www.tornadoweb.org/en/stable/
-[here]: https://github.com/felix-chan/connect4-platform/docs/game-api.md
+[here]: https://github.com/felix-chan/connect4-platform/blob/master/docs/game-api.md
